@@ -1,3 +1,4 @@
+@echo off
 set RAKUDO_VER=%1
 
 rem Download Rakudo and build
@@ -24,10 +25,12 @@ copy C:\strawberry\perl\bin\libgcc_s_seh-1.dll C:\rakudo\bin
 
 rem Package .msi
 mkdir output
-heat dir C:\rakudo -gg -sfrag -cg RakudoStar -dr INSTALLROOT -srd -out star-files.wxs
-candle star-files.wxs
+heat dir C:\rakudo\bin -dr DIR_BIN -cg FilesBin -gg -g1 -sfrag -srd -suid -sw5150 -var "var.BinDir" -out files-bin.wxs
+heat dir C:\rakudo\include -dr DIR_INCLUDE -cg FilesInclude -gg -g1 -sfrag -srd -var "var.IncludeDir" -out files-include.wxs
+heat dir C:\rakudo\share -dr DIR_SHARE -cg FilesShare -gg -g1 -sfrag -srd -sw5150 -var "var.ShareDir" -out files-share.wxs
+candle files-bin.wxs files-include.wxs files-share.wxs -dBinDir="C:\rakudo\bin" -dIncludeDir="C:\rakudo\include" -dShareDir="C:\rakudo\share"
 candle -dSTARVERSION=%RAKUDO_VER% star.wxs
-light -b C:\rakudo -ext WixUIExtension star-files.wixobj star.wixobj -o output\rakudo-star-%RAKUDO_VER%-01-win-x86_64-(JIT).msi
+light -b C:\rakudo -ext WixUIExtension files-bin.wixobj files-include.wixobj files-share.wixobj star.wixobj -sw1076 -o output\rakudo-star-%RAKUDO_VER%-01-win-x86_64-(JIT).msi
 
 rem SHA256
 if "%2"=="--checksum" CertUtil -hashfile output\rakudo-star-%RAKUDO_VER%-01-win-x86_64-(JIT).msi SHA256 | findstr /V ":" > output\rakudo-star-%RAKUDO_VER%-01-win-x86_64-(JIT).msi.sha256.txt 
@@ -37,8 +40,12 @@ if "%3"=="--sign" gpg --armor --detach-sig output\rakudo-star-%RAKUDO_VER%-01-wi
 
 rem Clean up
 del rakudo-%RAKUDO_VER%.tar.gz
-del star-files.wxs
-del star-files.wixobj
+del files-bin.wxs
+del files-include.wxs
+del files-share.wxs
+del files-bin.wixobj
+del files-include.wixobj
+del files-share.wixobj
 del star.wixobj
 del output\rakudo-star-%RAKUDO_VER%-01-win-x86_64-(JIT).wixpdb
 echo y | rmdir /s rakudo-%RAKUDO_VER%

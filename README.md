@@ -14,12 +14,12 @@ Make sure `C:\rakudo` is deleted before starting
 Usage:
 ------
 
-* `build.bat YYYY.MM`  
-Build the MSI
-* `build.bat YYYY.MM --checksum`  
-Build the MSI and calculates the sha256 checksum
-* `build.bat YYYY.MM --checksum --sign`  
-Build the MSI, calculates the sha256 checksum, and sign the MSI with your key
+* Build the MSI:  
+`build.bat YYYY.MM`
+* Build the MSI and calculates the sha256 checksum:  
+`build.bat YYYY.MM --checksum`
+* Build the MSI, calculates the sha256 checksum, and sign the MSI with your key:  
+`build.bat YYYY.MM --checksum --sign`
 
 Output:
 -------
