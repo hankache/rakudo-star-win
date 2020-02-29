@@ -15,6 +15,9 @@ git clone https://github.com/ugexe/zef.git
 cd zef
 C:\rakudo\bin\raku.exe -I. bin\zef install .
 
+rem Add the required rakudo folders to PATH in order for some modules to test correctly (File::Which)
+PATH = %PATH%C:\rakudo\bin;C:\rakudo\share\perl6\site\bin;
+
 rem Install modules
 cd ..\..
 C:\rakudo\bin\raku.exe C:\rakudo\share\perl6\site\bin\zef install .
@@ -25,9 +28,9 @@ copy C:\strawberry\perl\bin\libgcc_s_seh-1.dll C:\rakudo\bin
 
 rem Package .msi
 mkdir output
-heat dir C:\rakudo\bin -dr DIR_BIN -cg FilesBin -gg -g1 -sfrag -srd -suid -sw5150 -var "var.BinDir" -out files-bin.wxs
-heat dir C:\rakudo\include -dr DIR_INCLUDE -cg FilesInclude -gg -g1 -sfrag -srd -var "var.IncludeDir" -out files-include.wxs
-heat dir C:\rakudo\share -dr DIR_SHARE -cg FilesShare -gg -g1 -sfrag -srd -sw5150 -var "var.ShareDir" -out files-share.wxs
+heat dir C:\rakudo\bin -dr DIR_BIN -cg FilesBin -gg -g1 -sfrag -srd -suid -ke -sw5150 -var "var.BinDir" -out files-bin.wxs
+heat dir C:\rakudo\include -dr DIR_INCLUDE -cg FilesInclude -gg -g1 -sfrag -srd -ke -var "var.IncludeDir" -out files-include.wxs
+heat dir C:\rakudo\share -dr DIR_SHARE -cg FilesShare -gg -g1 -sfrag -srd -ke -sw5150 -var "var.ShareDir" -out files-share.wxs
 candle files-bin.wxs files-include.wxs files-share.wxs -dBinDir="C:\rakudo\bin" -dIncludeDir="C:\rakudo\include" -dShareDir="C:\rakudo\share"
 candle -dSTARVERSION=%RAKUDO_VER% star.wxs
 light -b C:\rakudo -ext WixUIExtension files-bin.wixobj files-include.wixobj files-share.wixobj star.wixobj -sw1076 -o output\rakudo-star-%RAKUDO_VER%-01-win-x86_64-(JIT).msi

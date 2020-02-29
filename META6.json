@@ -62,7 +62,9 @@
 		"JSON::RPC",
 		"Getopt::Long",
 		"TAP",
-		"App::Prove6"
+		"App::Prove6",
+		"Pod::Utilities",
+		"Slang::Tuxic"
     ],
     "provides" : { }
 }

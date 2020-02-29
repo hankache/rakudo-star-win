@@ -9,7 +9,8 @@ Prerequisites:
 * [Strawberry Perl](http://strawberryperl.com/)
 * [Gpg4win](https://www.gpg4win.org/) (Optional)
 
-Make sure `C:\rakudo` is deleted before starting
+Uninstall Rakudo if it was installed previously.  
+Delete `C:\rakudo` if it exists.  
 
 Usage:
 ------
