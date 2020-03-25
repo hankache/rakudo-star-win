@@ -3,7 +3,6 @@ Build Rakudo Star for Windows
 
 Prerequisites:
 --------------
-* [Wget](https://eternallybored.org/misc/wget/)
 * [Git](https://git-scm.com/)
 * [WiX Toolset](https://wixtoolset.org/)
 * [Strawberry Perl](http://strawberryperl.com/)
@@ -16,11 +15,11 @@ Usage:
 ------
 
 * Build the MSI:  
-`build.bat YYYY.MM`
+`.\build.ps1 YYYY.MM`
 * Build the MSI and calculates the sha256 checksum:  
-`build.bat YYYY.MM --checksum`
+`.\build.ps1 YYYY.MM -checksum`
 * Build the MSI, calculates the sha256 checksum, and sign the MSI with your key:  
-`build.bat YYYY.MM --checksum --sign`
+`.\build.ps1 YYYY.MM -checksum -sign`
 
 Output:
 -------
